@@ -3,9 +3,9 @@
 void filter(int *pin) {
     int n, buf, pout[2];
     pipe(pout);
+    close(pin[1]);
     if (read(pin[0], &n, sizeof(int))) {
         printf("prime %d\n", n);
-        close(pin[1]);
         if (!fork()) {
             filter(pout);
             exit();
@@ -20,6 +20,7 @@ void filter(int *pin) {
             wait();
         }
     }
+    close(pin[0]);
 }
 
 int main(int argc, char *argv[]) {
@@ -30,6 +31,7 @@ int main(int argc, char *argv[]) {
         filter(p);
         exit();
     } else {
+        close(p[0]);
         for (int i = 2; i <= 35; i++) {
             write(p[1], &i, sizeof(int));
         }

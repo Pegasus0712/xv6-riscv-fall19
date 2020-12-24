@@ -54,8 +54,7 @@ void find(char *path, char *file) {
 
 int main(int argc, char *argv[]) {
     if (argc < 2 || argc > 3) {
-        printf("Usage: find (path) [file]\n");
-        exit();
+        printf("Usage: find [path] (file)\n");
     } else if (argc < 3) {
         find(".", argv[1]);
     } else {
